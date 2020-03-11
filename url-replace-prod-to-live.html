@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Replace Url</title>
+</head>
+
+<style>
+	#write {color: green;}
+	.emphasis {font-weight: bold; color: #333; font-size: 0.975rem; }
+	body {
+		padding: 20px;
+		color: #737373;
+		font-family: "Merriweather Sans", Helvetica, Roboto, Arial, sans-serif;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		margin-bottom: 0;
+		}
+	
+	p {font-size: 0.875rem;
+		line-height: 1.25rem;}
+	
+	div {font-size: 0.875rem;
+		line-height: 1.25rem;}
+
+	h1 {line-height: 2.25rem; font-size: 1.875rem; color: #000;}
+/* unvisited link */
+a:link {
+  color: grey;
+}
+
+/* visited link */
+a:visited {
+  color: grey;
+}
+
+/* mouse over link */
+a:hover {
+  color: lightblue;
+}
+
+/* selected link */
+a:active {
+  color: blue;
+}
+	
+	input[type=text] {
+		font-family: 'Consolas', monospace;
+		font-size: 0.875rem;
+		padding: .03em;
+		text-align: left;
+		width: 100%;
+		border-radius: 4px;
+		box-sizing: border-box;
+		border: 1px solid #cccccc;
+		padding: 10px 10px 10px 10px;
+	}
+
+/* insane button CSS from http://www.bestcssbuttongenerator.com/ */ 
+.myButton {
+	-moz-box-shadow: 0px 1px 0px 0px #f0f7fa;
+	-webkit-box-shadow: 0px 1px 0px 0px #f0f7fa;
+	box-shadow: 0px 1px 0px 0px #f0f7fa;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #33bdef), color-stop(1, #019ad2));
+	background:-moz-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:-webkit-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:-o-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:-ms-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bdef', endColorstr='#019ad2',GradientType=0);
+	background-color:#33bdef;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #057fd0;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #5b6178;
+}
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #019ad2), color-stop(1, #33bdef));
+	background:-moz-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:-webkit-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:-o-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:-ms-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#019ad2', endColorstr='#33bdef',GradientType=0);
+	background-color:#019ad2;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+	
+</style>
+	
+<body>
+	<h1>Replace URLS from Production - AEM</h1>
+	<p>
+		This tool replaces production server links provided in AEM to live website links (public view).
+	</p>
+	
+	<p>
+	<div>
+	<div class="emphasis">Production Url Example:</div> 
+		https://author.thestar.com/cf#/content/thestar/life/coursesandcareers/2020/03/10/the-importance-of-life-long-learning.html?cq_ck=1583864291128
+	</div>
+	</p>
+	
+	<p>
+	<div class="emphasis">Public Url:</div> 
+	<div id="bos" >
+https://author.thestar.com/cf#/content/thestar/life/coursesandcareers/2020/03/10/the-importance-of-life-long-learning.html?cq_ck=1583864291128
+</div>
+	</p>
+
+		
+<p>URL: <input type="text" id="urlinput" ></p>
+
+<button id="generatebtn" class="myButton">Generate</button>
+
+<p >  <br />
+<span id="write"></span></p>
+
+
+
+	
+
+
+<script>
+// get the button and make it respond to a click
+var theButton = document.getElementById("generatebtn");
+	theButton.onclick = feedTheButton;
+
+
+// the simple function is called within this one 
+function feedTheButton() {
+	// get the two numbers from the text input fields
+	//var box1 = document.getElementById("urlinput").value;
+ 	var box1 = document.getElementById('urlinput').value;
+	
+var box1 = box1.replace(/https:\/\/author.thestar.com\/cf#\/content\/thestar/ig, "https:\/\/thestar.com");
+var box1 = box1.replace(/[?]cq_ck/,"");
+	
+	var box1 = box1.replace(/[=]\d{13}/g, "");			 
+ 
+  // write the result into the HTML
+  var place = document.getElementById("write");
+  place.innerHTML = "The New URL is: " +"<br />" + 
+	  "<a href=" 
+	 //this is the url
+	  + box1 
+	  +" target='_blank' >" 
+	// this is the link text on display
+	  + box1 + "</a>";
+	
+	
+	
+  
+}
+	
+//This is the top part to demo the code works.
+var str = document.getElementById('bos').innerHTML
+var str = str.replace(/https:\/\/author.thestar.com\/cf#\/content\/thestar/ig, "https:\/\/thestar.com");
+	
+	
+	var str = str.replace(/[?]cq_ck/,"");
+	var str = str.replace(/[=]\d{13}/g, "");			 
+
+	
+	document.getElementById('bos').innerHTML =  "<a href=" + str + " target='_blank' >"  + str + "</a>";
+	</script>
+	
+	
+
+</body>
+</html>
